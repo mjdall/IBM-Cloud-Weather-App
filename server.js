@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const api = require('./api/apiv1.js')
 const app = express()
-const port = process.env.PORT || 5000
+const port = 5000 //  || 5000
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

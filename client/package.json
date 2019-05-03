@@ -6,21 +6,22 @@
     "bootstrap": "^4.3.1",
     "bootswatch": "^4.3.1",
     "core-js": "^3.0.1",
+    "eslint-config-react-app": "^4.0.0",
     "isomorphic-fetch": "^2.2.1",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "^3.0.0",
+    "react-scripts": "^3.0.1",
     "reactstrap": "^8.0.0"
+  },
+  "engines": {
+    "node": "8.11.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -40,5 +41,8 @@
     "semi": false,
     "singleQuote": true
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "devDependencies": {
+    "babel-eslint": "^10.0.1"
+  }
 }

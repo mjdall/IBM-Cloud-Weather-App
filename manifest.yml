@@ -1,0 +1,10 @@
+applications:
+- disk_quota: 1024M
+  name: demodra
+  buildpack: sdk-for-nodejs
+  command: yarn dev
+  path: .
+  instances: 1
+  memory: 1500M
+  env:
+    DIFF_ENV: testing
