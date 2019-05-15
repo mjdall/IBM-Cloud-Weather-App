@@ -13,46 +13,46 @@ module.exports = function(grunt) {
         },
         src: ['tests/server/*.js'],
       },
-    //   'server-side-spec': {
-    //     options: {
-    //       reporter: 'spec',
-    //       clearRequireCache: true,
-    //       colors: true,
-    //       quite: true,
-    //     },
-    //     src: ['tests/server/*.js'],
-    //   },
-    //   'client-side-spec': {
-    //     options: {
-    //       reporter: 'spec',
-    //       clearRequireCache: true,
-    //       colors: true,
-    //       quite: true,
-    //     },
-    //     src: ['tests/client/report.spec.js'],
-    //   },
-    //   'saucelab-fvt': {
-    //     options: {
-    //       reporter: 'json',
-    //       clearRequireCache: true,
-    //       colors: true,
-    //       quite: false,
-    //       timeout: 60000,
-    //       captureFile: 'saucelabfvt.json',
-    //     },
-    //     src: ['tests/saucelab/*.js'],
-    //   },
-    //   fvt: {
-    //     options: {
-    //       reporter: 'json',
-    //       clearRequireCache: true,
-    //       colors: true,
-    //       quite: false,
-    //       timeout: 60000,
-    //       captureFile: 'mochafvt.json',
-    //     },
-    //     src: ['tests/fvt/*.js'],
-    //   },
+      // 'server-side-spec': {
+      //   options: {
+      //     reporter: 'spec',
+      //     clearRequireCache: true,
+      //     colors: true,
+      //     quite: true,
+      //   },
+      //   src: ['tests/server/*.js'],
+      // },
+      // 'client-side-spec': {
+      //   options: {
+      //     reporter: 'spec',
+      //     clearRequireCache: true,
+      //     colors: true,
+      //     quiet: true,
+      //   },
+      //   src: ['tests/client/report.spec.js'],
+      // },
+      // 'saucelab-fvt': {
+      //   options: {
+      //     reporter: 'json',
+      //     clearRequireCache: true,
+      //     colors: true,
+      //     quite: false,
+      //     timeout: 60000,
+      //     captureFile: 'saucelabfvt.json',
+      //   },
+      //   src: ['tests/saucelab/*.js'],
+      // },
+      // fvt: {
+      //   options: {
+      //     reporter: 'json',
+      //     clearRequireCache: true,
+      //     colors: true,
+      //     quiet: false,
+      //     timeout: 60000,
+      //     captureFile: 'mochafvt.json',
+      //   },
+      //   src: ['tests/fvt/*.js'],
+      // },
     },
 
     clean: {

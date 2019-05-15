@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Input } from 'reactstrap'
 
-const ZipCodeInputFields = ({
+const CityInputFields = ({
 	weatherMessages,
 	cityMessages,
 	inputCallback,
@@ -14,11 +14,11 @@ const ZipCodeInputFields = ({
 			return (
 				<>
 					<Row key={`input-field-row-${idx}`}>
-						<Col className="zip-code-input-col" md={{ size: 4 }}>
+						<Col className="city-input-col" md={{ size: 4 }}>
 							<Input
-								id={`zip${idx + 1}`}
-								className="zip-code-input-field"
-								placeholder="enter zip code..."
+								id={`city${idx + 1}`}
+								className="city-input-field"
+								placeholder="enter city name..."
 								onChange={e => inputCallback(e.target.value, idx)}
 							/>
 							,
@@ -34,4 +34,4 @@ const ZipCodeInputFields = ({
 	)
 }
 
-export default ZipCodeInputFields
+export default CityInputFields

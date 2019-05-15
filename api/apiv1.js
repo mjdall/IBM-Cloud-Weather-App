@@ -7,38 +7,27 @@ var request = REQUEST.defaults({
 })
 
 const WEATHER_API =
-  'http://api.openweathermap.org/data/2.5/weather?appid=6b7b471967dd0851d0010cdecf28f829&units=imperial'
-const COUNTRY_CODE = 'US'
+  'http://api.openweathermap.org/data/2.5/weather?appid=6b7b471967dd0851d0010cdecf28f829&units=metric'
+const COUNTRY_CODE = 'NZ'
 
 const getWeatherConditions = weatherReport => {
 	const weather =
     `Conditions are ${weatherReport.weather[0].main}` +
-    ` and temperature is ${weatherReport.main.temp} F`
+    ` and temperature is ${weatherReport.main.temp} C`
 	return { city: weatherReport.name, weather: weather }
 }
 
-const checkInputZip = zipCode => {
-	if (zipCode === null || typeof zipCode === 'undefined') {
-		return 'zip missing'
-	}
-	if (zipCode.length !== 5) {
-		return 'invalid zip code length'
-	}
-	return
-}
+exports.getWeather = (req, res) => {
+	const city = req.query.city
 
-exports.getWeather = function(req, res) {
-	const zip = req.query.zip
-	const errMsg = checkInputZip(zip)
+	if (city === undefined) {
+		return res.status(400).send({ msg: 'no "city" paramter provided' })
+	}
 
 	let respPayload
 	let statusCode = 400
 
-	if (errMsg) {
-		return res.status(statusCode).send({ msg: errMsg })
-	}
-
-	const weatherApiQuery = `${WEATHER_API}&zip=${zip},${COUNTRY_CODE}`
+	const weatherApiQuery = `${WEATHER_API}&q=${city},${COUNTRY_CODE}`
 
 	request(
 		{
@@ -53,7 +42,7 @@ exports.getWeather = function(req, res) {
 				statusCode = 200
 				respPayload = getWeatherConditions(body)
 			} else {
-				respPayload = { msg: `No weather data for ${zip}` }
+				respPayload = { msg: `No weather data for ${city}` }
 			}
 			return res.status(statusCode).send(respPayload)
 		}

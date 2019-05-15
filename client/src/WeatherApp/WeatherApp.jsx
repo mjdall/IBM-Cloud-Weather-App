@@ -2,46 +2,52 @@ import React, { Component } from 'react'
 import { Container, Row, Col } from 'reactstrap'
 
 import TitleBar from './components/TitleBar'
-import ZipInputHeaders from './components/ZipInputHeaders'
-import ZipCodeInputFields from './components/ZipCodeInputFields'
+import InputHeaders from './components/InputHeaders'
+import CityInputFields from './components/CityInputFields'
 import WeatherFooter from './components/Footer'
 
 require('./sass/style.scss')
 const fetch = require('isomorphic-fetch')
 
 const NUM_INPUT = 4
-const EXPECTED_ZIP_LENGTH = 5
 
 class WeatherApp extends Component {
 	state = {
 		cityMessages: Array(NUM_INPUT).fill(''),
 		weatherMessages: Array(NUM_INPUT).fill(''),
+		currentRequests: Array(NUM_INPUT).fill(undefined),
 		pins: [],
 	}
 
 	/*
 		Callback function for the input fields.
-		@param enteredZipCode The text in the input field.
+		@param enteredCity The text in the input field.
 		@param inputIdx An int in the range [0-NUM_INPUT).
 			Specifies what input field was written to. 
 	*/
-	handleZipCodeChange = (enteredZipCode, inputIdx) => {
+	handleCityChange = (enteredCity, inputIdx) => {
 		let {
-			state: { cityMessages, weatherMessages },
+			state: { currentRequests },
 		} = this
 
+		clearTimeout(currentRequests[inputIdx])
+		currentRequests[inputIdx] = setTimeout(
+			() => this.createFetchRequest(inputIdx, enteredCity),
+			500,
+		)
+		this.setState({
+			currentRequests: currentRequests,
+		})
+	}
+
+	createFetchRequest = (inputIdx, cityQuery) => {
+		let {
+			state: { cityMessages, weatherMessages, }
+		} = this
 		cityMessages[inputIdx] = ''
 		weatherMessages[inputIdx] = ''
 
-		if (enteredZipCode.length !== EXPECTED_ZIP_LENGTH) {
-			this.setState({
-				cityMessages: cityMessages,
-				weatherMessages: weatherMessages,
-			})
-			return
-		}
-
-		fetch(`/api/v1/getWeather?zip=${enteredZipCode}`)
+		return fetch(`/api/v1/getWeather?city=${cityQuery}`)
 			.then(resp => {
 				if (resp.status / 100 === 2) {
 					return resp.json()
@@ -56,7 +62,9 @@ class WeatherApp extends Component {
 				})
 			})
 			.catch(() => {
-				weatherMessages[inputIdx] = `No weather data for ${enteredZipCode}`
+				if (cityQuery) {
+					weatherMessages[inputIdx] = `No weather data for "${cityQuery}"`
+				}
 				this.setState({
 					cityMessages: cityMessages,
 					weatherMessages: weatherMessages,
@@ -75,11 +83,11 @@ class WeatherApp extends Component {
 				</Row>
 				<br />
 				<Col>
-					<ZipInputHeaders />
-					<ZipCodeInputFields
+					<InputHeaders />
+					<CityInputFields
 						weatherMessages={weatherMessages}
 						cityMessages={cityMessages}
-						inputCallback={this.handleZipCodeChange}
+						inputCallback={this.handleCityChange}
 					/>
 				</Col>
 				<WeatherFooter />

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Weather App",
+  "name": "Small app for contancting a weather api.",
   "icons": [
     {
       "src": "favicon.ico",
