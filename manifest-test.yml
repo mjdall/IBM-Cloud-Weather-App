@@ -2,10 +2,10 @@ applications:
 - disk_quota: 1024M
   host: demodratest
   name: demodratest
-  command: yarn dev
+  command: yarn prod
   path: .
   domain: mybluemix.net
   instances: 1
-  memory: 1500M
+  memory: 1000M
   env:
     DUMMY_ENV: testing

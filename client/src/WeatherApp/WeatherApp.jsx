@@ -4,10 +4,11 @@ import { Container, Row, Col } from 'reactstrap'
 import TitleBar from './components/TitleBar'
 import InputHeaders from './components/InputHeaders'
 import CityInputFields from './components/CityInputFields'
+import CityMap from './components/CityMap'
 import WeatherFooter from './components/Footer'
+import { GetAPIPromise } from './js/helpers'
 
 require('./sass/style.scss')
-const fetch = require('isomorphic-fetch')
 
 const NUM_INPUT = 4
 
@@ -15,6 +16,7 @@ class WeatherApp extends Component {
 	state = {
 		cityMessages: Array(NUM_INPUT).fill(''),
 		weatherMessages: Array(NUM_INPUT).fill(''),
+		pinPositions: Array(NUM_INPUT).fill(undefined),
 		currentRequests: Array(NUM_INPUT).fill(undefined),
 		pins: [],
 	}
@@ -42,40 +44,67 @@ class WeatherApp extends Component {
 
 	createFetchRequest = (inputIdx, cityQuery) => {
 		let {
-			state: { cityMessages, weatherMessages, }
+			state: { cityMessages, weatherMessages, pinPositions },
 		} = this
 		cityMessages[inputIdx] = ''
 		weatherMessages[inputIdx] = ''
+		pinPositions[inputIdx] = undefined
 
-		return fetch(`/api/v1/getWeather?city=${cityQuery}`)
-			.then(resp => {
-				if (resp.status / 100 === 2) {
-					return resp.json()
-				}
+		const apiEndpoint = `/api/v1/getWeather?city=${cityQuery}`
+		const successCallback = resp => {
+			cityMessages[inputIdx] = resp.city
+			weatherMessages[inputIdx] = resp.weather
+			pinPositions[inputIdx] = {
+				lat: resp.lat,
+				lng: resp.lng,
+			}
+			this.setState({
+				cityMessages: cityMessages,
+				weatherMessages: weatherMessages,
+				pinPositions: pinPositions,
 			})
-			.then(resp => {
-				cityMessages[inputIdx] = resp.city
-				weatherMessages[inputIdx] = resp.weather
-				this.setState({
-					cityMessages: cityMessages,
-					weatherMessages: weatherMessages,
-				})
+		}
+
+		const failureCallback = () => {
+			if (cityQuery) {
+				weatherMessages[inputIdx] = `No weather data for "${cityQuery}"`
+			}
+			this.setState({
+				cityMessages: cityMessages,
+				weatherMessages: weatherMessages,
 			})
-			.catch(() => {
-				if (cityQuery) {
-					weatherMessages[inputIdx] = `No weather data for "${cityQuery}"`
-				}
-				this.setState({
-					cityMessages: cityMessages,
-					weatherMessages: weatherMessages,
-				})
-			})
+		}
+		GetAPIPromise(apiEndpoint, successCallback, failureCallback)
+	}
+
+	/**
+	 * Filters any duplicate or not set pin locations.
+	 */
+	getFilteredPins = () => {
+		const reducer = (accumulator, latLng) => {
+			const matchedLatLon = accumulator
+				.slice(0)
+				.filter(
+					uniqueLL =>
+						uniqueLL.lat === latLng.lat && uniqueLL.lng === latLng.lng,
+				)
+			if (matchedLatLon.length === 0) {
+				accumulator.push(latLng)
+			}
+			return accumulator
+		}
+		return this.state.pinPositions
+			.filter(latLng => latLng !== undefined)
+			.reduce(reducer, [])
 	}
 
 	render() {
 		const {
 			state: { weatherMessages, cityMessages },
 		} = this
+
+		const filteredPinPositions = this.getFilteredPins()
+
 		return (
 			<Container className="App">
 				<Row>
@@ -90,6 +119,9 @@ class WeatherApp extends Component {
 						inputCallback={this.handleCityChange}
 					/>
 				</Col>
+				<Row>
+					<CityMap pinPositions={filteredPinPositions} />
+				</Row>
 				<WeatherFooter />
 			</Container>
 		)

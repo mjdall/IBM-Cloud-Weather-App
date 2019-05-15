@@ -14,21 +14,17 @@ const getWeatherConditions = weatherReport => {
 	const weather =
     `Conditions are ${weatherReport.weather[0].main}` +
     ` and temperature is ${weatherReport.main.temp} C`
-	return { city: weatherReport.name, weather: weather }
+	return {
+		city: weatherReport.name,
+		weather: weather,
+		lng: weatherReport.coord.lon,
+		lat: weatherReport.coord.lat,
+	}
 }
 
-exports.getWeather = (req, res) => {
-	const city = req.query.city
-
-	if (city === undefined) {
-		return res.status(400).send({ msg: 'no "city" paramter provided' })
-	}
-
+const sendApiRequest = (res, weatherApiQuery, failureMsg) => {
 	let respPayload
 	let statusCode = 400
-
-	const weatherApiQuery = `${WEATHER_API}&q=${city},${COUNTRY_CODE}`
-
 	request(
 		{
 			method: 'GET',
@@ -42,13 +38,39 @@ exports.getWeather = (req, res) => {
 				statusCode = 200
 				respPayload = getWeatherConditions(body)
 			} else {
-				respPayload = { msg: `No weather data for ${city}` }
+				respPayload = { msg: failureMsg }
 			}
 			return res.status(statusCode).send(respPayload)
 		}
 	)
 }
 
+exports.getWeather = (req, res) => {
+	const city = req.query.city
+
+	if (city === undefined) {
+		return res.status(400).send({ msg: 'no "city" paramter provided' })
+	}
+
+	const weatherApiQuery = `${WEATHER_API}&q=${city},${COUNTRY_CODE}`
+	const failureMsg = `No weather data for ${city}`
+	sendApiRequest(res, weatherApiQuery, failureMsg)
+}
+
+exports.getWeatherWithCoords = (req, res) => {
+	const lat = req.query.lat
+	const lon = req.query.lng
+
+	if (lat === undefined || lon === undefined) {
+		return res.status(400).send({ msg: 'no "lat" and/or "lng" provided' })
+	}
+
+	const weatherApiQuery = `${WEATHER_API}&lat=${lat}&lon=${lon}`
+	const failureMsg = `No weather data for ${lat} ${lon}`
+	sendApiRequest(res, weatherApiQuery, failureMsg)
+}
+
 router.get('/getWeather', exports.getWeather)
+router.get('/getWeatherWithCoords', exports.getWeatherWithCoords)
 
 exports.router = router

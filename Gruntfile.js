@@ -13,24 +13,24 @@ module.exports = function(grunt) {
         },
         src: ['tests/server/*.js'],
       },
-      // 'server-side-spec': {
-      //   options: {
-      //     reporter: 'spec',
-      //     clearRequireCache: true,
-      //     colors: true,
-      //     quite: true,
-      //   },
-      //   src: ['tests/server/*.js'],
-      // },
-      // 'client-side-spec': {
-      //   options: {
-      //     reporter: 'spec',
-      //     clearRequireCache: true,
-      //     colors: true,
-      //     quiet: true,
-      //   },
-      //   src: ['tests/client/report.spec.js'],
-      // },
+      'server-side-spec': {
+        options: {
+          reporter: 'spec',
+          clearRequireCache: true,
+          colors: true,
+          quite: true,
+        },
+        src: ['tests/server/*.js'],
+      },
+      'client-side-spec': {
+        options: {
+          reporter: 'spec',
+          clearRequireCache: true,
+          colors: true,
+          quiet: true,
+        },
+        src: ['tests/client/report.spec.js'],
+      },
       // 'saucelab-fvt': {
       //   options: {
       //     reporter: 'json',
@@ -42,17 +42,17 @@ module.exports = function(grunt) {
       //   },
       //   src: ['tests/saucelab/*.js'],
       // },
-      // fvt: {
-      //   options: {
-      //     reporter: 'json',
-      //     clearRequireCache: true,
-      //     colors: true,
-      //     quiet: false,
-      //     timeout: 60000,
-      //     captureFile: 'mochafvt.json',
-      //   },
-      //   src: ['tests/fvt/*.js'],
-      // },
+      fvt: {
+        options: {
+          reporter: 'json',
+          clearRequireCache: true,
+          colors: true,
+          quiet: false,
+          timeout: 60000,
+          captureFile: 'mochafvt.json',
+        },
+        src: ['tests/fvt/*.js'],
+      },
     },
 
     clean: {
@@ -109,24 +109,6 @@ module.exports = function(grunt) {
       },
     },
 
-    // sass: {
-    //   options: {
-    //     outputStyle: 'expanded',
-    //   },
-    //   dist: {
-    //     files: {
-    //       'static/built/css/default.css': 'static/sass/default.scss',
-    //     },
-    //   },
-    // },
-
-    // watch: {
-    //   sass: {
-    //     files: ['static/sass/*.scss'],
-    //     tasks: ['sass:dist'],
-    //   },
-    // },
-
     availabletasks: {
       tasks: {
         options: {
@@ -150,32 +132,6 @@ module.exports = function(grunt) {
         './client/src/**/*.jsx'
       ]
     },
-
-    // jshint: {
-    //   options: {
-    //     // options here to override JSHint defaults
-    //     esversion: 6,
-    //     asi: true,
-    //     globals: {
-    //       jQuery: true,
-    //       console: true,
-    //       module: true,
-    //       document: true,
-    //     },
-    //   },
-    //   browser: {
-    //     files: {
-    //       src: [
-    //         'src/**/*.jsx', 
-    //       ],
-    //     },
-    //   },
-    //   server: {
-    //     files: {
-    //       src: ['api/**/*.js', 'app.js'],
-    //     },
-    //   },
-    // },
 
     simplemocha: {
       sauce: {

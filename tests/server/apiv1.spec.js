@@ -103,6 +103,10 @@
         main: {
           temp: 78,
         },
+        coord: {
+          lon: 175.28,
+          lat: -37.79,
+        }
       }
 
       var request = function(obj, callback) {
@@ -124,6 +128,14 @@
         resMock.send.lastCall.args[0].weather ===
           'Conditions are cold and temperature is 78 C',
         'Unexpected response:' + resMock.send.lastCall.args[0].weather,
+      )
+      assert(
+        resMock.send.lastCall.args[0].lat === -37.79,
+        'Unexpected latitude: ' + resMock.send.lastCall.args[0].lat,
+      )
+      assert(
+        resMock.send.lastCall.args[0].lng === 175.28,
+        'Unexpected longitude: ' + resMock.send.lastCall.args[0].lng,
       )
     })
   })

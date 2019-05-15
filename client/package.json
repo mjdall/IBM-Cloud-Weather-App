@@ -3,23 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.18",
+    "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
     "bootswatch": "^4.3.1",
     "core-js": "^3.0.1",
     "eslint-config-react-app": "^4.0.0",
+    "google-map-react": "^1.1.4",
     "isomorphic-fetch": "^2.2.1",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^3.0.1",
-    "reactstrap": "^8.0.0"
+    "reactstrap": "^8.0.0",
+    "serve": "^11.0.0"
   },
   "engines": {
-    "node": "8.11.4"
+    "node": "8.11.4",
+    "serve": "^11.0.0"
   },
   "scripts": {
     "start": "PORT=3456 react-scripts start",
     "build": "react-scripts build",
+    "prod": "yarn build && node server.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -35,13 +42,13 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "http://localhost:5000",
   "prettier": {
     "trailingComma": "all",
     "tabWidth": 2,
     "semi": false,
     "singleQuote": true
   },
-  "proxy": "http://localhost:5000",
   "devDependencies": {
     "babel-eslint": "^10.0.1"
   }

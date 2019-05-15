@@ -5,22 +5,27 @@
   "private": true,
   "scripts": {
     "client": "cd client && yarn start",
+    "prod-client": "cd client && yarn build",
     "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn client\" \"yarn server\""
+    "dev": "concurrently --kill-others-on-fail \"yarn client\" \"yarn server\"",
+    "prod": "yarn prod-client && NODE_ENV=production yarn server"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "isomorphic-fetch": "^2.2.1",
-    "nodemon": "^1.19.0",
+    "node-sass": "^4.12.0",
+    "nodemon": "1.19.0",
     "react-scripts": "^3.0.1",
     "request": "^2.88.0",
-    "yarn": "^1.15.2"
+    "yarn": "1.15.2",
+    "serve": "^11.0.0"
   },
   "engines": {
-    "yarn": "^1.15.2",
-    "nodemon": "^1.19.0",
-    "node": "8.11.4"
+    "yarn": "1.15.2",
+    "nodemon": "1.19.0",
+    "node": "8.11.4",
+    "serve": "^11.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -36,7 +41,6 @@
     "grunt-eslint": "^21.0.0",
     "grunt-istanbul": "^0.8.0",
     "grunt-mocha-test": "^0.12.7",
-    "grunt-sass": "^1.1.0",
     "mocha": "^2.3.3",
     "rewire": "^2.3.4",
     "saucelabs": "^1.0.1",

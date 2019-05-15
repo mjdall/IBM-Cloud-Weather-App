@@ -20,7 +20,6 @@
       }
 
       const city = 'Taupo'
-      // console.log(appUrl + `/api/v1/getWeather?city=${city}`)
       request(
         {
           method: GET,
@@ -28,7 +27,6 @@
         },
         function(err, resp, body) {
           if (err) {
-            console.log(err)
             assert.fail('Failed to get the response')
           } else {
             assert.equal(resp.statusCode, 200)
