@@ -155,14 +155,11 @@ module.exports = function(grunt) {
     },
   })
 
-  // grunt.loadNpmTasks('grunt-sass')
   grunt.loadNpmTasks('grunt-available-tasks')
-  // grunt.loadNpmTasks('grunt-bower-installer')
   grunt.loadNpmTasks('grunt-eslint')
   grunt.loadNpmTasks('grunt-mocha-test')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-copy')
-  grunt.loadNpmTasks('grunt-contrib-jshint')
   grunt.loadNpmTasks('grunt-istanbul')
 
   grunt.renameTask('makeReport', 'makeReport-lcov')

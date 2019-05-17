@@ -9,8 +9,10 @@ const CityInputFields = ({
 	return (
 		weatherMessages.map((message, idx) => {
 			const cityMessage = cityMessages[idx]
+			const hasCityMessage = cityMessage !== ''
 			const displayedMessage =
-				cityMessage !== '' ? `${cityMessages[idx]} - ${message}` : message
+				hasCityMessage ? `${cityMessages[idx]} - ${message}` : message
+			const placeHolder = hasCityMessage ? cityMessage : 'enter city name...'
 			return (
 				<>
 					<Row key={`input-field-row-${idx}`}>
@@ -18,7 +20,7 @@ const CityInputFields = ({
 							<Input
 								id={`city${idx + 1}`}
 								className="city-input-field"
-								placeholder="enter city name..."
+								placeholder={placeHolder}
 								onChange={e => inputCallback(e.target.value, idx)}
 							/>
 							,

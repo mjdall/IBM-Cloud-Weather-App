@@ -21,6 +21,28 @@ class WeatherApp extends Component {
 		pins: [],
 	}
 
+	componentDidMount() {
+		let {
+			state: { cityMessages, weatherMessages, pinPositions },
+		} = this
+		const apiEndpoint = '/api/v1/getInputFields'
+		GetAPIPromise(apiEndpoint, resp => {
+			cityMessages.map((msg, idx) => {
+				if (resp[idx] !== undefined) {
+					cityMessages[idx] = resp[idx].city
+					weatherMessages[idx] = resp[idx].weather
+					pinPositions[idx] = resp[idx].location
+				}
+			})
+			this.setState({
+				cityMessages,
+				weatherMessages,
+				pinPositions
+			})
+		},
+		() => {})
+	}
+
 	/*
 		Callback function for the input fields.
 		@param enteredCity The text in the input field.
@@ -50,7 +72,7 @@ class WeatherApp extends Component {
 		weatherMessages[inputIdx] = ''
 		pinPositions[inputIdx] = undefined
 
-		const apiEndpoint = `/api/v1/getWeather?city=${cityQuery}`
+		const apiEndpoint = `/api/v1/getWeather?city=${cityQuery}&input=${inputIdx}`
 		const successCallback = resp => {
 			cityMessages[inputIdx] = resp.city
 			weatherMessages[inputIdx] = resp.weather
@@ -104,7 +126,6 @@ class WeatherApp extends Component {
 		} = this
 
 		const filteredPinPositions = this.getFilteredPins()
-
 		return (
 			<Container className="App">
 				<Row>

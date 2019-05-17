@@ -24,13 +24,13 @@ const CityMap = ({ pinPositions }) => {
 	const sendReq = ({ lat, lng }) => {
 		setWeatherMsg('')
 		setSelectedPin(undefined)
-		const apiEndpoint = `/api/v1/getWeatherWithCoords?lat=${lat}&lng=${lng}`
-		const succussCallback = resp => {
+		const apiEndpoint = `/api/v1/getWeatherWithCoords?lat=${lat}&lng=${lng}&input=100`
+		const successCallback = resp => {
 			setWeatherMsg(`${resp.city} - ${resp.weather}`)
 			setSelectedPin({ lat: lat, lng: lng })
 		}
 		const failureCallback = () => setWeatherMsg(errMsg)
-		GetAPIPromise(apiEndpoint, succussCallback, failureCallback)
+		GetAPIPromise(apiEndpoint, successCallback, failureCallback)
 	}
 
 	// copy array and push the selected pin if it's set
@@ -43,7 +43,7 @@ const CityMap = ({ pinPositions }) => {
 		<>
 			<Col>
 				<Row>
-					<Col md={{ size: 8, offset: 2 }} style={{ display: 'inline', 'text-align': 'center' }}>
+					<Col md={{ size: 8, offset: 2 }} style={{ display: 'inline', textAlign: 'center' }}>
 						{weatherMsg.length === 0 ? (
 							<LoadSpinner />
 						) : (

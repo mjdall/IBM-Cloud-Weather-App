@@ -8,11 +8,20 @@ module.exports = {
 					return resp.json()
 				}
 			})
-			.then(resp => {
-				successCallback(resp)
-			})
-			.catch(() => {
-				failureCallback()
-			})
-	}
+			.then(resp => successCallback(resp))
+			.catch(failureCallback)
+	},
+	MakePOSTRequestWithJSON(
+		endpoint,
+		jsonPayload,
+		successCallback,
+		failureCallback,
+	) {
+		return fetch(endpoint, {
+			method: 'POST',
+			body: jsonPayload,
+		})
+			.then(resp => successCallback(resp))
+			.catch(() => failureCallback())
+	},
 }

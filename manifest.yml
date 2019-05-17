@@ -2,7 +2,7 @@ applications:
 - disk_quota: 1024M
   name: demodra
   buildpack: sdk-for-nodejs
-  command: yarn prod
+  command: sh ./scripts/deploy.sh production
   path: .
   instances: 1
   memory: 1000M
