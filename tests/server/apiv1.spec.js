@@ -50,14 +50,14 @@
 
 			await apiv1.getWeather(reqMock, resMock)
 
-			// assert(
-			//   resMock.status.lastCall.calledWith(400),
-			//   'Unexpected response:' + resMock.status.lastCall.args,
-			// )
-			// assert(
-			//   resMock.send.lastCall.calledWith({ msg: 'Failed to get data' }),
-			//   'Unexpected response:' + resMock.send.lastCall.args,
-			// )
+			assert(
+			  resMock.status.lastCall.calledWith(400),
+			  'Unexpected response:' + resMock.status.lastCall.args,
+			)
+			assert(
+			  resMock.send.lastCall.calledWith({ msg: 'Failed to get data' }),
+			  'Unexpected response:' + resMock.send.lastCall.args,
+			)
 		})
 
 		it('with incomplete city', function() {
@@ -75,14 +75,14 @@
 
 			apiv1.getWeather(reqMock, resMock)
 
-			// assert(
-			//   resMock.status.lastCall.calledWith(400),
-			//   'Unexpected response:' + resMock.status.lastCall.args,
-			// )
-			// assert(
-			//   resMock.send.lastCall.args[0].msg === 'No weather data for Hamilto',
-			//   'Unexpected response:' + resMock.send.lastCall.args,
-			// )
+			assert(
+			  resMock.status.lastCall.calledWith(400),
+			  'Unexpected response:' + resMock.status.lastCall.args,
+			)
+			assert(
+			  resMock.send.lastCall.args[0].msg === 'No weather data for Hamilto',
+			  'Unexpected response:' + resMock.send.lastCall.args,
+			)
 		})
 
 		it('with valid city', function() {
@@ -117,27 +117,27 @@
 
 			apiv1.getWeather(reqMock, resMock)
 
-			// assert(
-			//   resMock.status.lastCall.calledWith(200),
-			//   'Unexpected response:' + resMock.status.lastCall.args,
-			// )
-			// assert(
-			//   resMock.send.lastCall.args[0].city === 'Hamilton',
-			//   'Unexpected response:' + resMock.send.lastCall.args[0].city,
-			// )
-			// assert(
-			//   resMock.send.lastCall.args[0].weather ===
-			//     'Conditions are cold and temperature is 78 C',
-			//   'Unexpected response:' + resMock.send.lastCall.args[0].weather,
-			// )
-			// assert(
-			//   resMock.send.lastCall.args[0].lat === -37.79,
-			//   'Unexpected latitude: ' + resMock.send.lastCall.args[0].lat,
-			// )
-			// assert(
-			//   resMock.send.lastCall.args[0].lng === 175.28,
-			//   'Unexpected longitude: ' + resMock.send.lastCall.args[0].lng,
-			// )
+			assert(
+			  resMock.status.lastCall.calledWith(200),
+			  'Unexpected response:' + resMock.status.lastCall.args,
+			)
+			assert(
+			  resMock.send.lastCall.args[0].city === 'Hamilton',
+			  'Unexpected response:' + resMock.send.lastCall.args[0].city,
+			)
+			assert(
+			  resMock.send.lastCall.args[0].weather ===
+			    'Conditions are cold and temperature is 78 C',
+			  'Unexpected response:' + resMock.send.lastCall.args[0].weather,
+			)
+			assert(
+			  resMock.send.lastCall.args[0].lat === -37.79,
+			  'Unexpected latitude: ' + resMock.send.lastCall.args[0].lat,
+			)
+			assert(
+			  resMock.send.lastCall.args[0].lng === 175.28,
+			  'Unexpected longitude: ' + resMock.send.lastCall.args[0].lng,
+			)
 		})
 	})
 })()

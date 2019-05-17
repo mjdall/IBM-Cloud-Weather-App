@@ -171,7 +171,7 @@ module.exports = function(grunt) {
     'clean:all',
     'eslint',
   ])
-  grunt.registerTask('fvt-test', ['mochaTest:fvt'])
+  grunt.registerTask('fvt-test', ['mochaTest:fvt']) // 'mochaTest:saucelab-fvt', 
   grunt.registerTask('dev-test', [
     'clean:coverage',
     'copy:resourcesForInstrumented',
